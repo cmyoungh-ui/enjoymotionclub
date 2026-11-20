@@ -4,8 +4,20 @@
 
 ## 미리보기
 
-- `enjoymotionclub-site/index.html` 파일을 브라우저로 열기
+- **공개 주소: https://cmyoungh-ui.github.io/enjoymotionclub/**
+- `index.html` 파일을 브라우저로 열기
 - 또는 폴더에서 `python3 -m http.server 8000` 실행 후 `http://localhost:8000` 접속
+
+## 배포
+
+GitHub Pages(`main` 브랜치 `/` 루트)로 자동 배포됩니다. 이 폴더에서 고친 뒤 커밋·push하면 1~2분 안에 위 주소에 반영됩니다.
+
+```
+git add -A && git commit -m "수정 내용" && git push origin main
+```
+
+- 저장소: https://github.com/cmyoungh-ui/enjoymotionclub
+- Pages는 HTML을 최대 10분간 캐시합니다(캐시 지운 새로고침 또는 사파리 개인정보 보호 탭으로 바로 확인).
 
 ## 구성
 
@@ -50,7 +62,7 @@
 ## 참고
 
 - 폰트는 Pretendard(CDN) → Noto Sans KR → 시스템 폰트 순으로 대체됩니다. 오프라인에서는 시스템 폰트로 보입니다.
-- `og:image`는 상대 경로라 실제 도메인에 올릴 때 절대 주소로 바꿔 주세요.
+- `og:image`는 `https://cmyoungh-ui.github.io/enjoymotionclub/assets/hero-banner.png` 절대 주소로 지정되어 있습니다. 커스텀 도메인을 붙이면 그 주소로 바꿔 주세요.
 - 사업자등록번호와 대표자명은 푸터에 표기되어 있습니다. 공개하지 않으려면 해당 줄을 지우면 됩니다.
 - 영상은 `preload="metadata"` + `poster`라서 재생 버튼을 누르기 전에는 영상 본체를 내려받지 않습니다. 영상에는 소리(오디오 트랙)가 없습니다.
 - 영상을 바꿀 때는 같은 이름(`clip-N.mp4`)으로 교체하고 `clip-N-poster.jpg`를 함께 바꾸면 됩니다. 세로 영상은 `9:16`으로 꽉 차게(object-fit: cover) 보입니다.
