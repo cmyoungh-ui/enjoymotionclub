@@ -14,8 +14,8 @@
 | `index.html` | 페이지 전체 (HTML + CSS + 최소 JS 포함) |
 | `assets/hero-banner.png` | 히어로 배경 (원본) |
 | `assets/hero-banner.webp` | 히어로 배경 (경량 버전, 87KB) |
-| `assets/studio-cover.png` | 스튜디오 공간 사진 (원본) |
-| `assets/studio-cover.webp` | 스튜디오 사진 (경량 버전, 65KB) |
+| `assets/studio-real.jpg` | 스튜디오 공간 실제 사진 (1200×1600) |
+| `assets/studio-real.webp` | 같은 사진 경량 버전 (131KB) |
 | `assets/schedule.jpg` | 시간표 이미지 (라이트박스용) |
 | `assets/schedule.webp` | 시간표 경량 버전 |
 | `assets/pricing.jpg` | 수강료 이미지 (라이트박스용) |
