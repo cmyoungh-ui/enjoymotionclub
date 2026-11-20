@@ -310,6 +310,29 @@
   .community-card p{font-size:.9rem;color:var(--ink-soft);line-height:1.72}
   .community-card .chips{margin-top:auto;padding-top:8px}
 
+  .community-field{margin-top:38px}
+  .community-subhead{max-width:660px;margin-bottom:24px}
+  .community-subhead h3{font-size:clamp(1.14rem,2vw,1.4rem)}
+  .community-subhead p{margin-top:10px;color:var(--ink-soft);font-size:.93rem;line-height:1.75;word-break:keep-all;overflow-wrap:break-word}
+  .scene-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .scene-card{
+    margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+    display:flex;flex-direction:column;box-shadow:var(--shadow-sm);
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s;
+  }
+  .scene-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(242,201,76,.7)}
+  .scene-media{position:relative;aspect-ratio:4/5;background:var(--cream-deep);overflow:hidden}
+  .scene-media picture{display:block;width:100%;height:100%}
+  .scene-media img,.scene-media video{width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;background:#2A0D0D}
+  .scene-tag{
+    position:absolute;left:12px;top:12px;z-index:2;background:rgba(24,21,18,.62);color:#FFF7DB;
+    font-size:.64rem;font-weight:800;letter-spacing:.1em;padding:6px 11px;border-radius:999px;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);pointer-events:none;text-transform:uppercase;
+  }
+  .scene-cap{padding:15px 18px 17px;display:flex;flex-direction:column;gap:4px}
+  .scene-cap strong{font-size:.94rem;letter-spacing:-.02em}
+  .scene-cap p{font-size:.82rem;color:var(--ink-soft);line-height:1.65;word-break:keep-all;overflow-wrap:break-word}
+
   /* ===================== Schedule ===================== */
   .schedule-grid{display:grid;grid-template-columns:.86fr 1.14fr;gap:22px;align-items:start}
   .panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow-sm)}
@@ -541,8 +564,7 @@
     .practice-media{aspect-ratio:16/10}
     .practice-copy{padding:24px 22px 28px;gap:10px}
     .community-body{grid-template-columns:1fr;gap:24px;padding:26px 22px 30px}
-    .community-grid{grid-template-columns:1fr}
-    .benefits{grid-template-columns:1fr;gap:24px;padding:28px}
+    .community-grid{grid-template-columns:1fr}    .benefits{grid-template-columns:1fr;gap:24px;padding:28px}
     .fact-grid{grid-template-columns:repeat(2,1fr)}
   }
   @media (max-width:720px){
@@ -573,9 +595,12 @@
     .channels{grid-template-columns:1fr}
     .practice-media{aspect-ratio:4/3}
     .practice-media img{object-position:50% 58%}
-    .community-media{aspect-ratio:16/10}
+    .community-media{aspect-ratio:16/9}
     .community-tag{left:10px;bottom:10px;font-size:.68rem;padding:6px 11px}
     .community-card{padding:24px 22px 22px}
+    .community-field{margin-top:30px}
+    .scene-grid{grid-template-columns:1fr;gap:16px}
+    .scene-tag{left:10px;top:10px;font-size:.6rem;padding:5px 9px}
     .mobile-bar{display:flex}
     .site-footer{padding:44px 0 30px}
     .footer-top{gap:22px}
@@ -958,6 +983,41 @@
           <p>모션탭 공식 파트너·화성FC 공식 파트너로서 화성시 남양읍을 중심으로 일상 속 건강한 움직임을 나누고 있습니다.</p>
           <div class="chips"><span class="chip">모션탭 공식 파트너</span><span class="chip">화성FC 공식 파트너</span><span class="chip">화성시 남양읍</span></div>
         </article>
+      </div>
+
+      <div class="community-field">
+        <div class="community-subhead reveal">
+          <p class="eyebrow">Field Notes</p>
+          <h3>화성FC 현장에서 남긴 기로</h3>
+          <p>지역 스포츠의 자리에서 만난 사람들, 그리고 그날 함께한 엔조이모션클럽의 순간들입니다.</p>
+        </div>
+
+        <div class="scene-grid">
+          <figure class="scene-card reveal">
+            <div class="scene-media">
+              <picture>
+                <source srcset="assets/community-marsqueencup.webp" type="image/webp">
+                <img src="assets/community-marsqueencup.jpg" alt="화성FC 마스코트 앞에서 엔조이모션클럽이 적힌 소품을 들고 서 있는 모습, MARS QUEEN CUP 현장" width="1200" height="1500" loading="lazy">
+              </picture>
+              <span class="scene-tag">화성FC MARS QUEEN CUP</span>
+            </div>
+            <figcaption class="scene-cap">
+              <strong>마스코트와 함께한 현장</strong>
+              <p>화성FC MARS QUEEN CUP이 열린 날, 엔조이모션클럽도 그 자리에 함께했습니다.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="scene-card reveal d1">
+            <div class="scene-media">
+              <video src="assets/clip-community.mp4" poster="assets/clip-community-poster.jpg" controls playsinline muted loop preload="metadata" width="720" height="1280" aria-label="엔조이모션클럽 SNS 팔로우 이벤트 안내판과 인스타그램 QR 코드"></video>
+              <span class="scene-tag">SNS 팔로우 이벤트</span>
+            </div>
+            <figcaption class="scene-cap">
+              <strong>제휴가맹점 프리미엄 빌리지</strong>
+              <p>화성FC 제휴가맹점 프리미엄 빌리지 ‘엔조이모션클럽’. 현장에서 SNS 팔로우 인증 이벤트를 함께 진행했습니다.</p>
+            </figcaption>
+          </figure>
+        </div>
       </div>
     </div>
   </section>

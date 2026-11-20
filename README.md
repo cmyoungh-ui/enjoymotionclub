@@ -40,6 +40,10 @@ git add -A && git commit -m "수정 내용" && git push origin main
 | `assets/practice-sunlit.webp` | 같은 사진 경량 버전 (62KB) |
 | `assets/community-clinic.jpg` | 화성FC ORANGE RE:BON 헬스케어 클리닉 현장 사진 (1600×900, EXIF 제거) |
 | `assets/community-clinic.webp` | 같은 사진 경량 버전 (71KB) |
+| `assets/community-marsqueencup.jpg` | 화성FC MARS QUEEN CUP 현장 사진 (1200×1500, 4:5 크롭, EXIF 제거) |
+| `assets/community-marsqueencup.webp` | 같은 사진 경량 버전 (104KB) |
+| `assets/clip-community.mp4` | SNS 팔로우 이벤트 현장 영상 (6초 / 720×1280 / 무음, 1.1MB) |
+| `assets/clip-community-poster.jpg` | 그 영상의 포스터 프레임 (720×1280, 157KB) |
 
 `<picture>`로 webp를 먼저 불러오고, 지원하지 않는 브라우저는 원본 PNG/JPG를 사용합니다.
 
@@ -51,7 +55,7 @@ git add -A && git commit -m "수정 내용" && git push origin main
 4. 프로그램 — 베이직·하타 요가 / 새벽 요가 / 모션 트레이닝(모션탭 센서·6 스테이션 서킷) / 1:1 개인 레슨 + 햇살 아래 요가 실제 사진(`practice-sunlit`)
 5. 수업 모습 — 실제 수업 영상 6편(클릭 재생) + 밸런스·코어 사진 + 모션탭·6 스테이션 설명
 6. 공간 소개 — 스튜디오 사진 + 편의시설
-7. 사회공헌 — 화성FC ORANGE RE:BON 헬스케어 클리닉 사진 + 초등학교 돌봄친구들·지역사회 프로그램
+7. 사회공헌 — 화성FC ORANGE RE:BON 헬스케어 클리닉 사진 + 초등학교 돌봄친구들·지역사회 프로그램 + MARS QUEEN CUP 현장 사진과 SNS 팔로우 이벤트 영상
 8. 운영시간 & 시간표 — 요약 카드 + 주간 시간표 표 + 시간표 이미지(클릭 시 확대)
 9. 수강료 & 혜택 — 4개 요금 카드 + 체험비 페이백 배너 + 수강료 이미지(클릭 시 확대)
 10. 오시는 길 & 채널 — 주소·전화·운영시간·편의시설 + 네이버 플레이스·인스타그램·블로그·당근
