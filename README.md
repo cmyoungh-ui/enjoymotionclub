@@ -32,7 +32,7 @@ git add -A && git commit -m "수정 내용" && git push origin main
 | `assets/schedule.webp` | 시간표 경량 버전 |
 | `assets/pricing.jpg` | 수강료 이미지 (라이트박스용) |
 | `assets/pricing.webp` | 수강료 경량 버전 |
-| `assets/clip-1.mp4` … `assets/clip-6.mp4` | 실제 수업 영상 6편 (H.264 / 720×1280 / 무음, 0.4–3.1MB) |
+| `assets/clip-1.mp4` … `assets/clip-6.mp4` | 실제 수업 영상 6편 (H.264 / 720×1280 / 무음, 0.4–4.2MB) |
 | `assets/clip-1-poster.jpg` … `assets/clip-6-poster.jpg` | 각 영상의 포스터 프레임 (720×1280, 약 50KB) |
 | `assets/studio-balance.jpg` | 밸런스 패드 수업 사진 (945×1614, 아이폰 상단 바·검은 여백 제거) |
 | `assets/studio-balance.webp` | 같은 사진 경량 버전 (59KB) |
