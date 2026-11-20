@@ -36,6 +36,8 @@ git add -A && git commit -m "수정 내용" && git push origin main
 | `assets/clip-1-poster.jpg` … `assets/clip-6-poster.jpg` | 각 영상의 포스터 프레임 (720×1280, 약 50KB) |
 | `assets/studio-balance.jpg` | 밸런스 패드 수업 사진 (945×1614, 아이폰 상단 바·검은 여백 제거) |
 | `assets/studio-balance.webp` | 같은 사진 경량 버전 (59KB) |
+| `assets/practice-sunlit.jpg` | 햇살 아래 요가·호흡 실제 사진 (1600×900, EXIF 제거) |
+| `assets/practice-sunlit.webp` | 같은 사진 경량 버전 (62KB) |
 
 `<picture>`로 webp를 먼저 불러오고, 지원하지 않는 브라우저는 원본 PNG/JPG를 사용합니다.
 
@@ -44,7 +46,7 @@ git add -A && git commit -m "수정 내용" && git push origin main
 1. 상단 고정 내비게이션 — 프로그램 / 시간표 / 수강료 / 오시는 길 + `체험 예약`
 2. 히어로 — 화성 FC 공식 파트너 배지, 메인 카피, 체험 예약·블로그 CTA
 3. 핵심 정보 스트립 — 새벽 요가, 평일 운영시간, 1:1 레슨, 무료 주차
-4. 프로그램 — 베이직·하타 요가 / 새벽 요가 / 모션 트레이닝(모션탭 센서·6 스테이션 서킷) / 1:1 개인 레슨
+4. 프로그램 — 베이직·하타 요가 / 새벽 요가 / 모션 트레이닝(모션탭 센서·6 스테이션 서킷) / 1:1 개인 레슨 + 햇살 아래 요가 실제 사진(`practice-sunlit`)
 5. 수업 모습 — 실제 수업 영상 6편(클릭 재생) + 밸런스·코어 사진 + 모션탭·6 스테이션 설명
 6. 공간 소개 — 스튜디오 사진 + 편의시설
 7. 운영시간 & 시간표 — 요약 카드 + 주간 시간표 표 + 시간표 이미지(클릭 시 확대)

@@ -195,6 +195,23 @@
   .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:8px}
   .chip{font-size:.74rem;font-weight:700;color:var(--olive);background:var(--brand-soft);border:1px solid rgba(242,201,76,.45);padding:4px 10px;border-radius:999px;white-space:nowrap}
 
+  .practice-feature{
+    display:grid;grid-template-columns:1.24fr .76fr;align-items:stretch;
+    margin:0 0 24px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;box-shadow:var(--shadow-sm);
+  }
+  .practice-media{position:relative;background:var(--cream-deep);aspect-ratio:16/10;overflow:hidden}
+  .practice-media picture{display:block;width:100%;height:100%}
+  .practice-media img{width:100%;height:100%;object-fit:cover;object-position:50% 52%}
+  .practice-tag{
+    position:absolute;left:14px;bottom:14px;background:rgba(255,255,255,.92);color:var(--ink);
+    font-size:.72rem;font-weight:800;letter-spacing:-.01em;padding:7px 12px;border-radius:999px;box-shadow:var(--shadow-sm);
+  }
+  .practice-copy{padding:36px 34px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+  .practice-copy h3{font-size:clamp(1.2rem,2.1vw,1.5rem)}
+  .practice-copy p{color:var(--ink-soft);font-size:.94rem;line-height:1.75}
+  .practice-copy .btn{align-self:flex-start;margin-top:8px}
+
   /* ===================== Space ===================== */
   .space-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:52px;align-items:center}
   .space-media{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:5/4.4;box-shadow:var(--shadow)}
@@ -479,6 +496,9 @@
     .balance-media{aspect-ratio:auto}
     .balance-media img{height:auto;max-height:560px}
     .balance-copy{padding:26px 22px 30px}
+    .practice-feature{grid-template-columns:1fr;margin-bottom:18px}
+    .practice-media{aspect-ratio:16/10}
+    .practice-copy{padding:24px 22px 28px;gap:10px}
     .benefits{grid-template-columns:1fr;gap:24px;padding:28px}
     .fact-grid{grid-template-columns:repeat(2,1fr)}
   }
@@ -508,6 +528,8 @@
     .clip-cap p{font-size:.76rem}
     .clip-media .clip-num{left:8px;top:8px;font-size:.56rem;padding:4px 8px}
     .channels{grid-template-columns:1fr}
+    .practice-media{aspect-ratio:4/3}
+    .practice-media img{object-position:50% 58%}
     .mobile-bar{display:flex}
     .site-footer{padding:44px 0 30px}
     .footer-top{gap:22px}
@@ -636,6 +658,25 @@
         <h2 id="program-title">지금의 몸에 맞는 수업</h2>
         <p>요가가 처음이든, 오래 해오셨든. 무리 없이 시작해서 꾸준히 이어갈 수 있는 수업을 준비했습니다.</p>
       </div>
+
+      <figure class="practice-feature reveal">
+        <div class="practice-media">
+          <picture>
+            <source srcset="assets/practice-sunlit.webp" type="image/webp">
+            <img src="assets/practice-sunlit.jpg" alt="큰 창으로 들어온 오후 햇살 아래 노란 매트에 앉아 호흡을 가다듬는 요가 수업 장면" width="1600" height="900" loading="lazy">
+          </picture>
+          <span class="practice-tag">요가 · 호흡</span>
+        </div>
+        <figcaption class="practice-copy">
+          <p class="eyebrow">Practice</p>
+          <h3>햇살이 길게 드는 시간,<br>호흡부터 시작하는 요가</h3>
+          <p>큰 창으로 오후 햇살이 들어오는 스튜디오에서 호흡에 맞춰 기본 자세부터 천천히 잡아 갑니다. 처음 오시는 날에도 무리 없이 따라올 수 있는 속도로 진행합니다.</p>
+          <a class="btn btn-ghost btn-sm" href="#schedule">
+            요가 수업 시간표 보기
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </figcaption>
+      </figure>
 
       <div class="program-grid">
         <article class="program-card reveal">
@@ -787,7 +828,7 @@
   </section>
 
   <!-- ================= Space ================= -->
-  <section class="section band-white" aria-labelledby="space-title">
+  <section class="section band-white" id="studio" aria-labelledby="space-title">
     <div class="container">
       <div class="space-grid">
         <div class="space-media reveal">
