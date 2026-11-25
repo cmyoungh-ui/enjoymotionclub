@@ -621,10 +621,10 @@
   PLACES.forEach(function(p){ center.extend([p.lat, p.lng]); });
   var c = center.getCenter();
   var mapW = document.getElementById('map').clientWidth || 1000;
-  if (mapW < 720) {
-    map.setView([c.lat + 0.0016, c.lng + 0.0006], 15);
-  } else {
-    map.fitBounds(center, {padding: [40, 40], maxZoom: 15.5});
+  map.fitBounds(center, {padding: [36, 36], maxZoom: 15});
+  if (map.getZoom() < 15) {
+    map.setZoom(15, {animate: false});
+    map.panTo([c.lat + 0.0022, c.lng + 0.0005], {animate: false});
   }
 
   /* ---------- list ---------- */
