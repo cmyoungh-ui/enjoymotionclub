@@ -54,6 +54,7 @@
     font-family:"Pretendard Variable",Pretendard,"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
     font-size:17px;line-height:1.75;letter-spacing:-.01em;
     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip;
+    word-break:keep-all;overflow-wrap:break-word;
   }
   img{max-width:100%;display:block}
   a{color:inherit}
@@ -228,7 +229,7 @@
   }
   .card-main{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
   .card-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .card-title strong{font-size:1rem;font-weight:800;letter-spacing:-.035em;line-height:1.4;word-break:keep-all}
+  .card-title strong{font-size:1rem;font-weight:800;letter-spacing:-.035em;line-height:1.4;word-break:keep-all;overflow-wrap:anywhere}
   .chip{font-size:.68rem;font-weight:800;letter-spacing:-.01em;color:var(--c);background:rgba(35,32,29,.055);background:color-mix(in srgb,var(--c) 11%,#fff);border-radius:999px;padding:3px 9px;line-height:1.5;white-space:nowrap}
   .card-sub{font-size:.8rem;color:var(--muted);font-weight:600;letter-spacing:-.01em}
   .card-sub b{color:var(--ink);font-weight:800}
