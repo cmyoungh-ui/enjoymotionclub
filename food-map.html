@@ -522,8 +522,9 @@
   var map = L.map('map', {
     scrollWheelZoom: false,
     zoomControl: true,
-    attributionControl: true
-  }).setView([STUDIO.lat, STUDIO.lng], 15);
+    attributionControl: true,
+    zoomSnap: 0.25
+  });
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -540,7 +541,7 @@
   });
   var studioMarker = L.marker([STUDIO.lat, STUDIO.lng], {icon: studioIcon, zIndexOffset: 1200, title: STUDIO.name})
     .addTo(map)
-    .bindTooltip('엔조이모션클럽', {permanent: true, direction: 'top', offset: [0, -22], className: 'studio-label'});
+    .bindTooltip('엔조이모션클럽 · 기준점', {direction: 'top', offset: [0, -24], className: 'studio-label'});
 
   studioMarker.bindPopup(
     '<div class="pop">' +
@@ -612,8 +613,15 @@
   }
 
   function fitAll(){
-    map.fitBounds(bounds, {padding: [46, 46]});
+    map.fitBounds(bounds, {padding: [46, 46], maxZoom: 16});
   }
+
+  /* initial view: 중심을 살짝 잡고, 화면 폭에 따라 배율을 고른다 */
+  var center = L.latLngBounds([[STUDIO.lat, STUDIO.lng]]);
+  PLACES.forEach(function(p){ center.extend([p.lat, p.lng]); });
+  var c = center.getCenter();
+  var mapW = document.getElementById('map').clientWidth || 1000;
+  map.setView([c.lat + 0.0004, c.lng + 0.0012], mapW < 720 ? 15 : 15.5);
 
   /* ---------- list ---------- */
   var listEl = document.getElementById('place-list');
@@ -788,7 +796,6 @@
   mapEl.addEventListener('blur', function(){ map.scrollWheelZoom.disable(); });
 
   applyFilter();
-  fitAll();
   setTimeout(function(){ map.invalidateSize(); }, 300);
 
   /* smooth in-page nav for mobile menu */
