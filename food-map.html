@@ -306,6 +306,10 @@
     .filters::-webkit-scrollbar{display:none}
     .filter{flex:0 0 auto;padding:8px 12px;font-size:.82rem}
     .map-shell{border-radius:20px}
+    .map-tools{top:10px;right:10px;gap:6px}
+    .map-tool{padding:8px 10px}
+    .map-tool .lbl{display:none}
+    .map-tool svg{width:16px;height:16px}
     #map{height:56vh;min-height:320px}
     .card-head{padding:14px}
     .card-title strong{font-size:.96rem}
@@ -412,13 +416,13 @@
       <div class="map-shell">
         <div id="map" role="application" aria-label="남양읍 맛집 지도"></div>
         <div class="map-tools">
-          <button class="map-tool" type="button" id="fit-all">
+          <button class="map-tool" type="button" id="fit-all" aria-label="전체 보기">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V5h4M20 9V5h-4M4 15v4h4M20 15v4h-4"/></svg>
-            전체 보기
+            <span class="lbl">전체 보기</span>
           </button>
-          <button class="map-tool" type="button" id="to-studio">
+          <button class="map-tool" type="button" id="to-studio" aria-label="스튜디오 위치로">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.7 5.6 6.1.8-4.5 4.2 1.2 6-5.5-3-5.5 3 1.2-6L3.2 9.9l6.1-.8z"/></svg>
-            스튜디오
+            <span class="lbl">스튜디오</span>
           </button>
         </div>
         <p class="map-hint" aria-hidden="true">핀을 누르면 상세 정보가 열립니다</p>
