@@ -621,7 +621,11 @@
   PLACES.forEach(function(p){ center.extend([p.lat, p.lng]); });
   var c = center.getCenter();
   var mapW = document.getElementById('map').clientWidth || 1000;
-  map.setView([c.lat + 0.0010, c.lng + 0.0008], mapW < 720 ? 15 : 15.25);
+  if (mapW < 720) {
+    map.setView([c.lat + 0.0016, c.lng + 0.0006], 15);
+  } else {
+    map.fitBounds(center, {padding: [40, 40], maxZoom: 15.5});
+  }
 
   /* ---------- list ---------- */
   var listEl = document.getElementById('place-list');
