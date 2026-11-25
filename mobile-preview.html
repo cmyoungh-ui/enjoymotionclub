@@ -16,6 +16,8 @@
   f.addEventListener("load", function(){
     try {
       var d = f.contentDocument;
+      var y = parseInt(q.get("y") || "0", 10);
+      if (y) f.contentWindow.scrollTo(0, y);
       var st = d.createElement("style");
       st.textContent = "html{scrollbar-width:none}html::-webkit-scrollbar{display:none}";
       d.head.appendChild(st);
