@@ -623,10 +623,17 @@
   PLACES.forEach(function(p){ center.extend([p.lat, p.lng]); });
   var c = center.getCenter();
   var mapW = document.getElementById('map').clientWidth || 1000;
-  map.fitBounds(center, {padding: [36, 36], maxZoom: 15});
-  if (map.getZoom() < 15) {
-    map.setZoom(15, {animate: false});
-    map.panTo([c.lat + 0.0022, c.lng + 0.0005], {animate: false});
+  var mlat = 0, mlng = 0;
+  PLACES.forEach(function(p){ mlat += p.lat; mlng += p.lng; });
+  mlat = mlat / PLACES.length; mlng = mlng / PLACES.length;
+  if (mapW < 720) {
+    map.setView([mlat + 0.0004, mlng], 15);
+  } else {
+    map.fitBounds(center, {padding: [36, 36], maxZoom: 15});
+    if (map.getZoom() < 15) {
+      map.setZoom(15, {animate: false});
+      map.panTo([c.lat + 0.0022, c.lng + 0.0005], {animate: false});
+    }
   }
 
   /* ---------- list ---------- */
