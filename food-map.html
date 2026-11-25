@@ -158,7 +158,7 @@
   }
   #map{width:100%;height:clamp(400px,60vh,620px);background:#EFEAE0;z-index:0}
   .leaflet-container{font-family:inherit;font-size:13px;background:#EFEAE0}
-  .leaflet-tile-pane{filter:sepia(.14) saturate(.92) brightness(1.01) contrast(.98)}
+  .leaflet-tile-pane{filter:saturate(.42) sepia(.10) brightness(1.05) contrast(.90)}
   .leaflet-control-attribution{font-size:10px;background:rgba(250,247,240,.82)!important;color:var(--muted)}
   .leaflet-control-attribution a{color:var(--ink-soft)}
   .leaflet-bar a{color:var(--ink)}
@@ -183,8 +183,8 @@
 
   /* Pins */
   .pin{
-    display:grid;place-items:center;width:30px;height:30px;border-radius:50%;
-    background:var(--c);color:#fff;font-size:.79rem;font-weight:800;letter-spacing:-.02em;
+    display:grid;place-items:center;width:28px;height:28px;border-radius:50%;
+    background:var(--c);color:#fff;font-size:.76rem;font-weight:800;letter-spacing:-.02em;
     border:2px solid #FFFDF7;box-shadow:0 6px 14px -6px rgba(35,32,29,.85);
     transition:transform .2s var(--ease),box-shadow .2s;
   }
@@ -424,7 +424,7 @@
 
       <p class="note">
         <strong>읽는 법</strong> · 거리는 스튜디오(시청로 12)에서 각 가게까지의 <strong>직선거리</strong>라서 실제 걸어가는 길과는 조금 다를 수 있어요.
-        지도는 <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a> 지도를 씁니다.
+        지도는 <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> 지도를 씁니다.
       </p>
     </div>
   </section>
@@ -525,10 +525,9 @@
     attributionControl: true
   }).setView([STUDIO.lat, STUDIO.lng], 15);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
-    detectRetina: true,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> 기여자'
   }).addTo(map);
 
   L.control.scale({imperial:false, position:'bottomright', maxWidth:90}).addTo(map);
@@ -580,7 +579,7 @@
     var icon = L.divIcon({
       className: 'pin-wrap',
       html: '<span class="pin" style="--c:' + COLORS[p.group] + '">' + p.num + '</span>',
-      iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -15]
+      iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -14]
     });
     var m = L.marker([p.lat, p.lng], {icon: icon, title: p.num + '. ' + p.name, riseOnHover: true})
       .addTo(map)
