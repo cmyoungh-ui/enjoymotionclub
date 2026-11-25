@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>단지쌤의 남양읍 맛픽리즘 지도 | 엔조이모션클럽에서 걸어가는 30곳</title>
+<meta name="description" content="엔조이모션클럽(경기도 화성시 남양읍 시청로 12)에서 걸어서 갈 수 있는 남양읍 맛집 30곳을 거리순으로 정리한 지도. 업종별 필터, 직선거리, 주소, 네이버 지도 바로가기까지.">
+<meta name="theme-color" content="#FAF7F0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="단지쌤의 남양읍 맛픽리즘 지도">
+<meta property="og:description" content="스튜디오에서 걸어서 갈 수 있는 남양읍 30곳. 거리순 리스트와 업종별 필터로 한눈에.">
+<meta property="og:url" content="https://cmyoungh-ui.github.io/enjoymotionclub/food-map.html">
+<meta property="og:image" content="https://cmyoungh-ui.github.io/enjoymotionclub/assets/hero-banner.png">
+<meta property="og:site_name" content="엔조이모션클럽">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://cmyoungh-ui.github.io/enjoymotionclub/food-map.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23F2C94C'/%3E%3Ccircle cx='32' cy='32' r='9' fill='none' stroke='%2323201D' stroke-width='3'/%3E%3Cg stroke='%2323201D' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M32 8v7M32 49v7M8 32h7M49 32h7M15 15l5 5M44 44l5 5M49 15l-5 5M20 44l-5 5'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  :root{
+    --brand:#F2C94C;
+    --brand-deep:#E4B437;
+    --brand-soft:#FFF7DB;
+    --cream:#FAF7F0;
+    --cream-deep:#F2ECE0;
+    --ink:#23201D;
+    --ink-soft:#4B443B;
+    --muted:#6F6759;
+    --olive:#55501F;
+    --line:rgba(35,32,29,.10);
+    --max:1160px;
+    --radius:26px;
+    --shadow-sm:0 2px 10px rgba(35,32,29,.05);
+    --shadow:0 24px 50px -34px rgba(35,32,29,.55);
+    --ease:cubic-bezier(.22,1,.36,1);
+
+    --c-korean:#B84B27;
+    --c-noodle:#A9761A;
+    --c-meat:#9E2F3A;
+    --c-western:#2C7458;
+    --c-japanese:#2C5E8C;
+    --c-chinese:#6B4A9C;
+    --c-snack:#7A5230;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--cream);color:var(--ink);
+    font-family:"Pretendard Variable",Pretendard,"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    font-size:17px;line-height:1.75;letter-spacing:-.01em;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  h1,h2,h3{margin:0;line-height:1.28;letter-spacing:-.035em;font-weight:800;text-wrap:balance}
+  p{margin:0}
+  ul,ol{margin:0;padding:0;list-style:none}
+  button{font:inherit;color:inherit;cursor:pointer}
+  ::selection{background:var(--brand);color:var(--ink)}
+  :focus-visible{outline:3px solid var(--brand-deep);outline-offset:3px;border-radius:10px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .container{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:22px}
+  .skip{position:absolute;left:16px;top:-60px;z-index:200;background:var(--ink);color:#FFF7DB;padding:10px 16px;border-radius:10px;text-decoration:none;transition:top .2s}
+  .skip:focus{top:12px}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:14px 24px;border:1px solid transparent;border-radius:999px;
+    font-weight:700;font-size:.95rem;line-height:1.2;text-decoration:none;white-space:nowrap;
+    transition:transform .22s var(--ease),box-shadow .22s var(--ease),background .22s var(--ease),color .22s var(--ease);
+  }
+  .btn-primary{background:var(--brand);color:#2B2410;box-shadow:0 14px 26px -14px rgba(210,165,45,.95)}
+  .btn-primary:hover{background:var(--brand-deep);transform:translateY(-2px)}
+  .btn-dark{background:var(--ink);color:#FFF7DB}
+  .btn-dark:hover{background:#000;transform:translateY(-2px)}
+  .btn-ghost{background:rgba(255,255,255,.72);border-color:rgba(35,32,29,.14);color:var(--ink)}
+  .btn-ghost:hover{background:#fff;transform:translateY(-2px)}
+  .btn-sm{padding:10px 16px;font-size:.85rem}
+
+  /* Header */
+  .site-header{
+    position:sticky;top:0;z-index:600;background:rgba(250,247,240,.86);
+    -webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-wrap{display:flex;align-items:center;gap:16px;max-width:var(--max);margin-inline:auto;padding:12px 22px}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);flex:0 0 auto}
+  .brand-mark{width:38px;height:38px;flex:0 0 auto;display:grid;place-items:center;background:var(--brand);border-radius:50%;box-shadow:inset 0 0 0 1px rgba(35,32,29,.06)}
+  .brand-mark svg{width:22px;height:22px}
+  .brand-text{display:flex;flex-direction:column;line-height:1.15}
+  .brand-text strong{font-size:1.03rem;font-weight:800;letter-spacing:-.03em}
+  .brand-text span{font-size:.58rem;font-weight:700;letter-spacing:.19em;color:var(--muted);margin-top:3px}
+  .nav{margin-left:auto;display:flex;align-items:center;gap:2px}
+  .nav a{text-decoration:none;font-size:.92rem;font-weight:600;color:var(--ink-soft);padding:9px 13px;border-radius:999px;transition:color .2s,background .2s}
+  .nav a:hover{color:var(--ink);background:rgba(242,201,76,.28)}
+  .nav a[aria-current="page"]{color:var(--ink);background:rgba(242,201,76,.36)}
+  .nav-cta{flex:0 0 auto}
+  .nav-toggle{display:none;width:44px;height:44px;border:1px solid var(--line);background:rgba(255,255,255,.8);border-radius:14px;align-items:center;justify-content:center;flex-direction:column;gap:5px;flex:0 0 auto}
+  .nav-toggle span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;transition:transform .25s var(--ease),opacity .2s}
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* Hero */
+  .page-hero{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--cream-deep) 0%,var(--cream) 100%);border-bottom:1px solid var(--line)}
+  .page-hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(60% 80% at 82% 10%,rgba(242,201,76,.32) 0%,rgba(242,201,76,0) 62%);
+  }
+  .hero-inner{position:relative;z-index:1;max-width:var(--max);margin-inline:auto;padding:56px 22px 46px}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.74rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--brand-deep);border-radius:2px}
+  .hero-inner h1{font-size:clamp(2rem,4vw,3.05rem);line-height:1.2;letter-spacing:-.045em;font-weight:900}
+  .hero-inner h1 em{
+    font-style:normal;
+    background:linear-gradient(transparent 62%,rgba(242,201,76,.85) 62%,rgba(242,201,76,.85) 94%,transparent 94%);
+    padding-bottom:2px;
+  }
+  .hero-lead{margin-top:20px;max-width:58ch;color:var(--ink-soft);font-size:1.01rem;line-height:1.85}
+  .hero-stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .hero-stats li{
+    display:flex;align-items:baseline;gap:8px;background:rgba(255,255,255,.78);
+    border:1px solid var(--line);border-radius:999px;padding:9px 18px;box-shadow:var(--shadow-sm);
+  }
+  .hero-stats strong{font-size:1.05rem;font-weight:900;letter-spacing:-.03em}
+  .hero-stats span{font-size:.83rem;color:var(--muted);font-weight:600}
+
+  /* Section shell */
+  .section{padding:38px 0 0}
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+  .section-head h2{font-size:1.32rem;letter-spacing:-.04em}
+  .section-head h2 .sub{display:block;font-size:.83rem;font-weight:600;color:var(--muted);letter-spacing:-.01em;margin-top:5px;line-height:1.6}
+
+  /* Filters */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+  .filter{
+    display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.82);
+    border:1px solid var(--line);border-radius:999px;padding:9px 15px;
+    font-size:.87rem;font-weight:700;color:var(--ink-soft);
+    transition:background .2s,color .2s,border-color .2s,transform .2s var(--ease),box-shadow .2s;
+  }
+  .filter:hover{background:#fff;transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+  .filter .dot{width:9px;height:9px;border-radius:50%;background:var(--c,var(--ink));flex:0 0 auto}
+  .filter .n{font-size:.74rem;font-weight:800;color:var(--muted);background:rgba(35,32,29,.06);border-radius:999px;padding:1px 7px;line-height:1.5}
+  .filter[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#FFF7DB}
+  .filter[aria-pressed="true"] .n{color:#FFF7DB;background:rgba(255,255,255,.16)}
+  .filter[aria-pressed="true"] .dot{box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+
+  /* Map */
+  .map-shell{
+    position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(35,32,29,.12);
+    background:var(--cream-deep);box-shadow:var(--shadow);
+  }
+  #map{width:100%;height:clamp(400px,60vh,620px);background:#EFEAE0;z-index:0}
+  .leaflet-container{font-family:inherit;font-size:13px;background:#EFEAE0}
+  .leaflet-tile-pane{filter:sepia(.14) saturate(.92) brightness(1.01) contrast(.98)}
+  .leaflet-control-attribution{font-size:10px;background:rgba(250,247,240,.82)!important;color:var(--muted)}
+  .leaflet-control-attribution a{color:var(--ink-soft)}
+  .leaflet-bar a{color:var(--ink)}
+  .leaflet-popup-content-wrapper{border-radius:18px;box-shadow:0 18px 40px -20px rgba(35,32,29,.6);padding:0}
+  .leaflet-popup-content{margin:0;width:250px!important;line-height:1.6}
+  .leaflet-popup-tip{background:#fff}
+  .leaflet-popup-close-button{width:30px!important;height:30px!important;line-height:28px!important;color:var(--muted)!important;font-size:20px!important}
+
+  .map-tools{position:absolute;top:12px;right:12px;z-index:500;display:flex;gap:8px}
+  .map-tool{
+    display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.94);
+    border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:.8rem;font-weight:700;
+    box-shadow:0 6px 18px -12px rgba(35,32,29,.8);transition:background .2s,transform .2s
+  }
+  .map-tool:hover{background:#fff;transform:translateY(-1px)}
+  .map-tool svg{width:14px;height:14px}
+  .map-hint{
+    position:absolute;left:12px;bottom:12px;z-index:500;background:rgba(35,32,29,.78);color:#FFF7DB;
+    border-radius:999px;padding:7px 14px;font-size:.74rem;font-weight:600;letter-spacing:-.01em;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);pointer-events:none;
+  }
+
+  /* Pins */
+  .pin{
+    display:grid;place-items:center;width:30px;height:30px;border-radius:50%;
+    background:var(--c);color:#fff;font-size:.79rem;font-weight:800;letter-spacing:-.02em;
+    border:2px solid #FFFDF7;box-shadow:0 6px 14px -6px rgba(35,32,29,.85);
+    transition:transform .2s var(--ease),box-shadow .2s;
+  }
+  .pin-wrap.is-dim{opacity:.34}
+  .pin-wrap.is-dim .pin{box-shadow:none}
+  .pin-wrap.is-active .pin{transform:scale(1.28);box-shadow:0 0 0 4px rgba(242,201,76,.85),0 8px 18px -8px rgba(35,32,29,.9);z-index:1000}
+  .pin-wrap.is-active{z-index:1000}
+  .studio-pin{
+    display:grid;place-items:center;width:46px;height:46px;border-radius:50%;
+    background:linear-gradient(160deg,#F7D874,#E4B437);color:#2B2410;font-size:1.45rem;line-height:1;
+    border:3px solid #FFFDF7;box-shadow:0 0 0 6px rgba(242,201,76,.28),0 12px 24px -12px rgba(35,32,29,.9);
+  }
+  .studio-label{
+    background:var(--ink);color:#FFF7DB;border:0;border-radius:999px;padding:5px 12px;
+    font-size:.74rem;font-weight:800;letter-spacing:-.02em;box-shadow:0 8px 18px -10px rgba(0,0,0,.9)
+  }
+  .studio-label::before{display:none}
+
+  /* Popup */
+  .pop{padding:16px 18px 18px}
+  .pop-cat{display:flex;align-items:center;gap:7px;font-size:.73rem;font-weight:800;color:var(--muted);letter-spacing:.02em}
+  .pop-cat .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+  .pop-name{margin:6px 0 0;font-size:1.14rem;font-weight:900;letter-spacing:-.03em;color:var(--ink);line-height:1.35}
+  .pop-dist{margin-top:7px;font-size:.83rem;color:var(--ink-soft)}
+  .pop-dist strong{font-weight:800;color:var(--ink)}
+  .pop-addr{margin-top:9px;font-size:.79rem;color:var(--muted);line-height:1.55;word-break:keep-all}
+  .pop-addr span{color:#8C8474}
+  .pop-btn{margin-top:13px;width:100%;padding:11px 14px;font-size:.85rem;border-radius:12px}
+  .pop-btn svg{width:14px;height:14px}
+
+  /* List */
+  .place-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:4px}
+  .card{background:rgba(255,255,255,.86);border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:border-color .25s,box-shadow .25s,transform .25s var(--ease),background .25s}
+  .card:hover{border-color:rgba(35,32,29,.18);box-shadow:var(--shadow-sm);transform:translateY(-2px);background:#fff}
+  .card.is-active{border-color:var(--brand-deep);box-shadow:0 0 0 3px rgba(242,201,76,.32);background:#fff}
+  .card-head{display:flex;align-items:flex-start;gap:13px;width:100%;padding:15px 16px;background:none;border:0;text-align:left}
+  .badge-num{
+    flex:0 0 auto;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;
+    background:var(--c);color:#fff;font-size:.8rem;font-weight:800;margin-top:2px;
+    box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.35);
+  }
+  .card-main{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+  .card-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .card-title strong{font-size:1rem;font-weight:800;letter-spacing:-.035em;line-height:1.4;word-break:keep-all}
+  .chip{font-size:.68rem;font-weight:800;letter-spacing:-.01em;color:var(--c);background:rgba(35,32,29,.055);background:color-mix(in srgb,var(--c) 11%,#fff);border-radius:999px;padding:3px 9px;line-height:1.5;white-space:nowrap}
+  .card-sub{font-size:.8rem;color:var(--muted);font-weight:600;letter-spacing:-.01em}
+  .card-sub b{color:var(--ink);font-weight:800}
+  .card-addr{font-size:.78rem;color:#8C8474;line-height:1.5;word-break:keep-all}
+  .card-chev{
+    flex:0 0 auto;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;
+    background:rgba(35,32,29,.05);color:var(--muted);font-size:1rem;line-height:1;margin-top:2px;
+    transition:transform .25s var(--ease),background .2s,color .2s
+  }
+  .card.is-active .card-chev{transform:rotate(45deg);background:var(--ink);color:#FFF7DB}
+  .card-detail{border-top:1px dashed var(--line);padding:14px 16px 16px;background:rgba(250,247,240,.6)}
+  .card-detail dl{display:grid;grid-template-columns:64px 1fr;gap:4px 10px;margin:0 0 12px;font-size:.79rem;line-height:1.55}
+  .card-detail dt{color:var(--muted);font-weight:700}
+  .card-detail dd{margin:0;color:var(--ink-soft);word-break:keep-all}
+  .card-detail .naver-link{width:100%}
+
+  /* Empty state */
+  .empty{
+    grid-column:1/-1;text-align:center;padding:44px 20px;border:1px dashed rgba(35,32,29,.18);
+    border-radius:20px;color:var(--muted);font-size:.9rem;background:rgba(255,255,255,.5)
+  }
+
+  /* Note / tip */
+  .note{margin-top:22px;padding:18px 20px;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid var(--line);font-size:.82rem;color:var(--muted);line-height:1.75}
+  .note strong{color:var(--ink-soft);font-weight:800}
+  .tip{margin:40px 0 0}
+  .tip-inner{
+    position:relative;padding:30px 28px;border-radius:var(--radius);
+    background:linear-gradient(150deg,#FFF7DB,rgba(242,201,76,.34));
+    border:1px solid rgba(228,180,55,.45);
+  }
+  .tip-inner h2{font-size:1.15rem;letter-spacing:-.04em}
+  .tip-inner p{margin-top:10px;font-size:.92rem;color:var(--ink-soft);line-height:1.85;max-width:64ch}
+
+  /* Footer */
+  .site-footer{margin-top:46px;background:var(--cream-deep);border-top:1px solid var(--line);padding:34px 0 40px}
+  .footer-top{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center;padding-bottom:20px;border-bottom:1px solid var(--line)}
+  .footer-brand{display:flex;align-items:center;gap:11px}
+  .fb-text{display:flex;flex-direction:column;line-height:1.2}
+  .fb-text strong{font-size:1rem;font-weight:800;letter-spacing:-.03em}
+  .fb-sub{font-size:.58rem;font-weight:700;letter-spacing:.19em;color:var(--muted);margin-top:3px}
+  .footer-links{display:flex;flex-wrap:wrap;gap:4px 6px}
+  .footer-links a{text-decoration:none;font-size:.84rem;font-weight:600;color:var(--ink-soft);padding:6px 10px;border-radius:999px}
+  .footer-links a:hover{background:rgba(242,201,76,.3);color:var(--ink)}
+  .footer-info{margin-top:18px;font-size:.79rem;color:var(--muted);line-height:1.9}
+  .footer-info span{color:var(--ink-soft);font-weight:600}
+  .footer-info a{color:inherit}
+  .footer-bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:16px;font-size:.75rem;color:#8C8474}
+
+  .mobile-bar{display:none}
+
+  @media (max-width:900px){
+    .place-list{grid-template-columns:1fr}
+    #map{height:clamp(340px,52vh,480px)}
+    .map-hint{display:none}
+  }
+  @media (max-width:820px){
+    .nav,.nav-cta{display:none}
+    .nav-toggle{display:flex;margin-left:auto}
+    .nav.is-open{
+      display:flex;position:absolute;left:12px;right:12px;top:64px;flex-direction:column;align-items:stretch;
+      background:rgba(250,247,240,.98);border:1px solid var(--line);border-radius:18px;padding:10px;
+      box-shadow:0 24px 44px -26px rgba(35,32,29,.6);gap:2px
+    }
+    .nav.is-open a{padding:12px 14px;font-size:.95rem}
+    .brand-text span{display:none}
+  }
+  @media (max-width:640px){
+    body{font-size:16px}
+    .hero-inner{padding:40px 20px 34px}
+    .hero-lead{font-size:.95rem}
+    .hero-stats li{padding:8px 14px}
+    .filters{gap:7px}
+    .filter{padding:8px 12px;font-size:.82rem}
+    .map-shell{border-radius:20px}
+    #map{height:56vh;min-height:320px}
+    .card-head{padding:14px}
+    .card-title strong{font-size:.96rem}
+    .footer-top{align-items:flex-start}
+    .site-footer{padding-bottom:90px}
+    .mobile-bar{
+      display:flex;position:fixed;left:0;right:0;bottom:0;z-index:650;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+      background:rgba(250,247,240,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line)
+    }
+    .mobile-bar .btn{flex:1;padding:13px 12px;font-size:.9rem}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 바로가기</a>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a class="brand" href="index.html" aria-label="엔조이모션클럽 홈으로">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#23201D" stroke-width="1.7" stroke-linecap="round">
+          <circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r="1.4" fill="#23201D" stroke="none"/>
+          <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6"/>
+        </svg>
+      </span>
+      <span class="brand-text"><strong>엔조이모션클럽</strong><span>ENJOY MOTION CLUB</span></span>
+    </a>
+
+    <nav class="nav" id="primary-nav" aria-label="주요 메뉴">
+      <a href="index.html#program">프로그램</a>
+      <a href="index.html#schedule">시간표</a>
+      <a href="index.html#pricing">수강료</a>
+      <a href="food-map.html" aria-current="page">맛집 지도</a>
+      <a href="index.html#location">오시는 길</a>
+    </nav>
+
+    <a class="btn btn-primary btn-sm nav-cta" href="https://map.naver.com/p/entry/place/2010489722" target="_blank" rel="noopener">체험 예약</a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="메뉴 열기">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="hero-inner">
+      <p class="eyebrow">Enjoy Motion Club · 남양읍</p>
+      <h1 id="page-title">단지쌤의 <em>남양읍 맛픽리즘</em> 지도</h1>
+      <p class="hero-lead">
+        수업 끝나고 걸어서 갈 만한 곳만 모아 봤습니다. 스튜디오에서 가까운 순서대로 30곳,
+        번호를 누르면 지도에 위치가 뜨고 네이버 지도로 바로 넘어갈 수 있어요.
+      </p>
+      <ul class="hero-stats">
+        <li><strong>30</strong><span>맛집</span></li>
+        <li><strong>166m</strong><span>가장 가까운 곳</span></li>
+        <li><strong>1.9km</strong><span>가장 먼 곳</span></li>
+        <li><strong>24곳</strong><span>도보 15분 이내</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="map-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="map-title">지도로 보기
+          <span class="sub">★ 엔조이모션클럽 기준 · 직선거리 · 업종별로 골라 볼 수 있어요</span>
+        </h2>
+        <p id="map-count" style="font-size:.85rem;font-weight:700;color:var(--muted)">30곳 표시 중</p>
+      </div>
+
+      <div class="filters" id="filters" role="group" aria-label="업종별 필터">
+        <button class="filter" type="button" data-group="all" aria-pressed="true" style="--c:#23201D">
+          <span class="dot" aria-hidden="true"></span>전체 <span class="n">30</span>
+        </button>
+        <button class="filter" type="button" data-group="korean" aria-pressed="false" style="--c:var(--c-korean)">
+          <span class="dot" aria-hidden="true"></span>한식·국물 <span class="n">6</span>
+        </button>
+        <button class="filter" type="button" data-group="noodle" aria-pressed="false" style="--c:var(--c-noodle)">
+          <span class="dot" aria-hidden="true"></span>면류 <span class="n">4</span>
+        </button>
+        <button class="filter" type="button" data-group="meat" aria-pressed="false" style="--c:var(--c-meat)">
+          <span class="dot" aria-hidden="true"></span>고기·구이 <span class="n">6</span>
+        </button>
+        <button class="filter" type="button" data-group="western" aria-pressed="false" style="--c:var(--c-western)">
+          <span class="dot" aria-hidden="true"></span>양식·아시아 <span class="n">6</span>
+        </button>
+        <button class="filter" type="button" data-group="japanese" aria-pressed="false" style="--c:var(--c-japanese)">
+          <span class="dot" aria-hidden="true"></span>일식·돈가스 <span class="n">3</span>
+        </button>
+        <button class="filter" type="button" data-group="chinese" aria-pressed="false" style="--c:var(--c-chinese)">
+          <span class="dot" aria-hidden="true"></span>중식 <span class="n">2</span>
+        </button>
+        <button class="filter" type="button" data-group="snack" aria-pressed="false" style="--c:var(--c-snack)">
+          <span class="dot" aria-hidden="true"></span>분식·카페·주점 <span class="n">3</span>
+        </button>
+      </div>
+
+      <div class="map-shell">
+        <div id="map" role="application" aria-label="남양읍 맛집 지도"></div>
+        <div class="map-tools">
+          <button class="map-tool" type="button" id="fit-all">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V5h4M20 9V5h-4M4 15v4h4M20 15v4h-4"/></svg>
+            전체 보기
+          </button>
+          <button class="map-tool" type="button" id="to-studio">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.7 5.6 6.1.8-4.5 4.2 1.2 6-5.5-3-5.5 3 1.2-6L3.2 9.9l6.1-.8z"/></svg>
+            스튜디오
+          </button>
+        </div>
+        <p class="map-hint" aria-hidden="true">핀을 누르면 상세 정보가 열립니다</p>
+      </div>
+
+      <p class="note">
+        <strong>읽는 법</strong> · 거리는 스튜디오(시청로 12)에서 각 가게까지의 <strong>직선거리</strong>라서 실제 걸어가는 길과는 조금 다를 수 있어요.
+        지도는 <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a> 지도를 씁니다.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="list-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="list-title">거리순 리스트
+          <span class="sub">가까운 순서대로 1번부터. 카드를 누르면 주소와 네이버 지도 링크가 열립니다.</span>
+        </h2>
+        <p id="list-count" style="font-size:.85rem;font-weight:700;color:var(--muted)">30곳</p>
+      </div>
+      <ol class="place-list" id="place-list"></ol>
+
+      <div class="tip">
+        <div class="tip-inner">
+          <h2>단지쌤 한마디</h2>
+          <p>
+            여기 있는 곳은 제가 실제로 저장해 둔 가게들이에요. 수업 끝나고 5분만 걸으면 닿는 곳이 대부분이라
+            샤워하고 나와서 가볍게 한 끼 하기 좋습니다. 영업시간이나 휴무일은 바뀔 수 있으니 출발 전에
+            네이버 지도에서 한 번만 확인해 주세요.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#23201D" stroke-width="1.7" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r="1.4" fill="#23201D" stroke="none"/>
+            <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6"/>
+          </svg>
+        </span>
+        <span class="fb-text"><strong>엔조이모션클럽</strong><span class="fb-sub">ENJOY MOTION CLUB</span></span>
+      </div>
+      <nav class="footer-links" aria-label="바로가기">
+        <a href="index.html">홈</a>
+        <a href="index.html#program">프로그램</a>
+        <a href="index.html#schedule">시간표</a>
+        <a href="index.html#pricing">수강료</a>
+        <a href="food-map.html">맛집 지도</a>
+        <a href="https://map.naver.com/p/entry/place/2010489722" target="_blank" rel="noopener">네이버 예약</a>
+      </nav>
+    </div>
+
+    <div class="footer-info">
+      <p>상호 <span>엔조이모션클럽</span> · 대표 <span>천명훈</span> · 사업자등록번호 <span>486-02-03767</span></p>
+      <p>경기도 화성시 남양읍 시청로 12 성은프라자 2층 · <a href="tel:+821025270318">010-2527-0318</a></p>
+      <p>평일 06:00 – 21:00 (휴게 11:00 – 14:00) · 주말 2·4주 격주 토·일 08:00</p>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Enjoy Motion Club. All rights reserved.</span>
+      <span>맛집 목록은 2026년 11월 25일 기준</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-bar">
+  <a class="btn btn-ghost" href="index.html#schedule">시간표</a>
+  <a class="btn btn-primary" href="https://map.naver.com/p/entry/place/2010489722" target="_blank" rel="noopener">체험 예약</a>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var DATA = {"studio":{"name":"엔조이모션클럽","lat":37.2080368,"lng":126.8187043,"road":"경기 화성시 시청로 12","jibun":"남양리 2253-4 2층 202, 203호","id":"2010489722","url":"https://map.naver.com/p/entry/place/2010489722"},"places":[{"name":"원냉면","cat":"냉면","group":"noodle","groupLabel":"면류","dist":166,"road":"남양성지로 147","jibun":"남양리 1268","lat":37.2095058,"lng":126.8190337,"id":"38276038","url":"https://map.naver.com/p/entry/place/38276038","num":1,"walk":2},{"name":"옛날잔치국수","cat":"국수","group":"noodle","groupLabel":"면류","dist":200,"road":"남양시장로 68-1","jibun":"남양리 1165-4","lat":37.209125,"lng":126.8169,"id":"35980479","url":"https://map.naver.com/p/entry/place/35980479","num":2,"walk":3},{"name":"컨트리로드 타이 레스토랑","cat":"태국음식","group":"western","groupLabel":"양식·아시아","dist":224,"road":"남양시장로 92","jibun":"남양리 1268-2","lat":37.2100118,"lng":126.8191893,"id":"1995394729","url":"https://map.naver.com/p/entry/place/1995394729","num":3,"walk":3},{"name":"베트남쌀국수THUYKIEU","cat":"베트남음식","group":"western","groupLabel":"양식·아시아","dist":245,"road":"","jibun":"남양리 1169-2","lat":37.2082104,"lng":126.815942,"id":"1140768821","url":"https://map.naver.com/p/entry/place/1140768821","num":4,"walk":4},{"name":"가마솥왕족발보쌈","cat":"족발,보쌈","group":"meat","groupLabel":"고기·구이","dist":246,"road":"남양시장로55번길 32","jibun":"남양리 1265-15","lat":37.2102196,"lng":126.8182541,"id":"1153524529","url":"https://map.naver.com/p/entry/place/1153524529","num":5,"walk":4},{"name":"아지매시장해장국 남양본점","cat":"국밥","group":"korean","groupLabel":"한식·국물","dist":255,"road":"시청로32번길 5-33","jibun":"남양리 2289-1","lat":37.2058728,"lng":126.8196559,"id":"1624848981","url":"https://map.naver.com/p/entry/place/1624848981","num":6,"walk":4},{"name":"브이게이PIZZA","cat":"피자","group":"western","groupLabel":"양식·아시아","dist":258,"road":"남양시장로 98","jibun":"남양리 1270-3","lat":37.2102471,"lng":126.8195926,"id":"1870901288","url":"https://map.naver.com/p/entry/place/1870901288","num":7,"walk":4},{"name":"삼미바지락팥칼국수 본점","cat":"칼국수,만두","group":"noodle","groupLabel":"면류","dist":262,"road":"남양시장로55번길 27-1","jibun":"남양리 1258-1","lat":37.2102597,"lng":126.8177295,"id":"32087511","url":"https://map.naver.com/p/entry/place/32087511","num":8,"walk":4},{"name":"대박양꼬치","cat":"양꼬치","group":"western","groupLabel":"양식·아시아","dist":263,"road":"남양시장로 58-10","jibun":"남양리 662-2","lat":37.2081691,"lng":126.8157349,"id":"1769109833","url":"https://map.naver.com/p/entry/place/1769109833","num":9,"walk":4},{"name":"자금성","cat":"중식당","group":"chinese","groupLabel":"중식","dist":271,"road":"남양성지로 155","jibun":"남양리 1270-3","lat":37.2102729,"lng":126.8199222,"id":"13554298","url":"https://map.naver.com/p/entry/place/13554298","num":10,"walk":4},{"name":"베레켓케밥","cat":"터키음식","group":"western","groupLabel":"양식·아시아","dist":278,"road":"남양시장로 58","jibun":"남양리 1870-5 1층","lat":37.2087823,"lng":126.8157033,"id":"1801473983","url":"https://map.naver.com/p/entry/place/1801473983","num":11,"walk":4},{"name":"남양김밥","cat":"김밥","group":"snack","groupLabel":"분식·카페·주점","dist":434,"road":"남양시장로 42","jibun":"남양리 541","lat":37.20864,"lng":126.813865,"id":"37851695","url":"https://map.naver.com/p/entry/place/37851695","num":12,"walk":6},{"name":"모이세이모네칼국수","cat":"칼국수,만두","group":"noodle","groupLabel":"면류","dist":460,"road":"남양성지로 89","jibun":"남양리 524","lat":37.2075447,"lng":126.8135466,"id":"238889682","url":"https://map.naver.com/p/entry/place/238889682","num":13,"walk":7},{"name":"태영생막창 남양점","cat":"곱창,막창,양","group":"meat","groupLabel":"고기·구이","dist":516,"road":"역골로 81-28","jibun":"남양리 2263-9 1동 1층","lat":37.2046374,"lng":126.8226639,"id":"2059260611","url":"https://map.naver.com/p/entry/place/2059260611","num":14,"walk":8},{"name":"장강","cat":"중식당","group":"chinese","groupLabel":"중식","dist":727,"road":"화성로 1215","jibun":"남양리 1098","lat":37.2143384,"lng":126.8165147,"id":"35980496","url":"https://map.naver.com/p/entry/place/35980496","num":15,"walk":11},{"name":"남서문매운왕갈비찜","cat":"육류,고기요리","group":"meat","groupLabel":"고기·구이","dist":774,"road":"화성로 1242-6","jibun":"남양리 1133","lat":37.2149387,"lng":126.8198374,"id":"1560743015","url":"https://map.naver.com/p/entry/place/1560743015","num":16,"walk":12},{"name":"초옹장","cat":"한식","group":"korean","groupLabel":"한식·국물","dist":775,"road":"역골중앙로41번길 39","jibun":"남양리 2021-20 1층 101호","lat":37.2065963,"lng":126.8272701,"id":"2004174048","url":"https://map.naver.com/p/entry/place/2004174048","num":17,"walk":12},{"name":"왕골남서문장작불곰탕 본점","cat":"곰탕,설렁탕","group":"korean","groupLabel":"한식·국물","dist":784,"road":"화성로 1238","jibun":"남양리 1146-1","lat":37.2150849,"lng":126.8190249,"id":"12984015","url":"https://map.naver.com/p/entry/place/12984015","num":18,"walk":12},{"name":"언덕위에돈까스","cat":"돈가스","group":"japanese","groupLabel":"일식·돈가스","dist":829,"road":"화성로1155번길 11-6","jibun":"남양리 176-5","lat":37.2109637,"lng":126.8100981,"id":"18654269","url":"https://map.naver.com/p/entry/place/18654269","num":19,"walk":12},{"name":"소하누정육식당","cat":"정육식당","group":"meat","groupLabel":"고기·구이","dist":866,"road":"역골로 39","jibun":"남양리 2020-7","lat":37.2030878,"lng":126.8262618,"id":"37134962","url":"https://map.naver.com/p/entry/place/37134962","num":20,"walk":13},{"name":"글루토","cat":"양식","group":"western","groupLabel":"양식·아시아","dist":979,"road":"남양천로 94-6","jibun":"남양리 2238-3 1층","lat":37.2130379,"lng":126.8278062,"id":"1488067835","url":"https://map.naver.com/p/entry/place/1488067835","num":21,"walk":15},{"name":"스시에 롤람","cat":"초밥,롤","group":"japanese","groupLabel":"일식·돈가스","dist":1000,"road":"역골중앙로100번길 17","jibun":"남양리 2039-13 103, 104호","lat":37.2082675,"lng":126.8299874,"id":"1023040198","url":"https://map.naver.com/p/entry/place/1023040198","num":22,"walk":15},{"name":"왕십리곱창","cat":"곱창,막창,양","group":"meat","groupLabel":"고기·구이","dist":1032,"road":"역골로 30-10","jibun":"남양리 2063-1 왕십리곱창","lat":37.2026752,"lng":126.8282158,"id":"1149924915","url":"https://map.naver.com/p/entry/place/1149924915","num":23,"walk":15},{"name":"뜰안에 본점","cat":"쌈밥","group":"korean","groupLabel":"한식·국물","dist":1066,"road":"성주골길 37","jibun":"남양리 103 뜰안에 본점","lat":37.2142194,"lng":126.8095049,"id":"35438671","url":"https://map.naver.com/p/entry/place/35438671","num":24,"walk":16},{"name":"여운","cat":"요리주점","group":"snack","groupLabel":"분식·카페·주점","dist":1075,"road":"역골로 20","jibun":"남양리 2062-12 104호","lat":37.2018204,"lng":126.8279935,"id":"1541166955","url":"https://map.naver.com/p/entry/place/1541166955","num":25,"walk":16},{"name":"김진순 남양껍데기 화성시청 본점","cat":"돼지고기구이","group":"meat","groupLabel":"고기·구이","dist":1127,"road":"역골동로 5-2","jibun":"남양리 2063-11","lat":37.2018327,"lng":126.8287645,"id":"1425519099","url":"https://map.naver.com/p/entry/place/1425519099","num":26,"walk":17},{"name":"루아노아","cat":"브런치카페","group":"snack","groupLabel":"분식·카페·주점","dist":1145,"road":"역골동로 124","jibun":"남양리 2230-1 1층 102호","lat":37.2110521,"lng":126.8310646,"id":"2001965620","url":"https://map.naver.com/p/entry/place/2001965620","num":27,"walk":17},{"name":"카쿠","cat":"돈가스","group":"japanese","groupLabel":"일식·돈가스","dist":1421,"road":"시청로202번길 76","jibun":"남양리 2164-6 1층 카쿠","lat":37.1966872,"lng":126.8260859,"id":"1380191941","url":"https://map.naver.com/p/entry/place/1380191941","num":28,"walk":21},{"name":"초가집 화성남양본점","cat":"아귀찜,해물찜","group":"korean","groupLabel":"한식·국물","dist":1585,"road":"남양로 610","jibun":"신남리 20-1","lat":37.1940973,"lng":126.8224509,"id":"1039490883","url":"https://map.naver.com/p/entry/place/1039490883","num":29,"walk":24},{"name":"설대감누룽지백숙","cat":"백숙,삼계탕","group":"korean","groupLabel":"한식·국물","dist":1850,"road":"마도공단로 16","jibun":"남양리 405-3","lat":37.2022276,"lng":126.7991274,"id":"33080183","url":"https://map.naver.com/p/entry/place/33080183","num":30,"walk":28}],"maxDist":1850};
+
+  var COLORS = {
+    korean:"#B84B27", noodle:"#A9761A", meat:"#9E2F3A", western:"#2C7458",
+    japanese:"#2C5E8C", chinese:"#6B4A9C", snack:"#7A5230"
+  };
+  var PLACES = DATA.places;
+  var STUDIO = DATA.studio;
+
+  /* ---------- header nav ---------- */
+  var navToggle = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('primary-nav');
+  if (navToggle && nav) {
+    navToggle.addEventListener('click', function(){
+      var open = nav.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
+  /* ---------- map ---------- */
+  var map = L.map('map', {
+    scrollWheelZoom: false,
+    zoomControl: true,
+    attributionControl: true
+  }).setView([STUDIO.lat, STUDIO.lng], 15);
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    detectRetina: true,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
+  }).addTo(map);
+
+  L.control.scale({imperial:false, position:'bottomright', maxWidth:90}).addTo(map);
+
+  /* studio marker */
+  var studioIcon = L.divIcon({
+    className: 'studio-wrap',
+    html: '<span class="studio-pin" aria-hidden="true">★</span>',
+    iconSize: [46, 46], iconAnchor: [23, 23], popupAnchor: [0, -26]
+  });
+  var studioMarker = L.marker([STUDIO.lat, STUDIO.lng], {icon: studioIcon, zIndexOffset: 1200, title: STUDIO.name})
+    .addTo(map)
+    .bindTooltip('엔조이모션클럽', {permanent: true, direction: 'top', offset: [0, -22], className: 'studio-label'});
+
+  studioMarker.bindPopup(
+    '<div class="pop">' +
+      '<p class="pop-cat"><span class="dot" style="background:#E4B437"></span>여기가 기준점</p>' +
+      '<h3 class="pop-name">엔조이모션클럽</h3>' +
+      '<p class="pop-dist">시청로 12 성은프라자 2층</p>' +
+      '<p class="pop-addr">경기도 화성시 남양읍 시청로 12<br><span>지번 남양리 2253-4</span></p>' +
+      '<a class="btn btn-primary pop-btn" href="' + STUDIO.url + '" target="_blank" rel="noopener">네이버 지도에서 보기' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>' +
+      '</a>' +
+    '</div>'
+  );
+
+  function walkText(m){
+    var min = Math.max(1, Math.round(m / 67));
+    return '도보 약 ' + min + '분';
+  }
+
+  function popupHtml(p){
+    var c = COLORS[p.group];
+    return '<div class="pop">' +
+      '<p class="pop-cat"><span class="dot" style="background:' + c + '"></span>' + p.groupLabel + ' · ' + p.cat + '</p>' +
+      '<h3 class="pop-name">' + p.num + '. ' + p.name + '</h3>' +
+      '<p class="pop-dist">스튜디오에서 직선 <strong>' + p.dist + 'm</strong> · ' + walkText(p.dist) + '</p>' +
+      '<p class="pop-addr">' + (p.road ? p.road : p.jibun) + '<br><span>지번 ' + p.jibun + '</span></p>' +
+      '<a class="btn btn-dark pop-btn" href="' + p.url + '" target="_blank" rel="noopener">네이버 지도에서 보기' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>' +
+      '</a>' +
+    '</div>';
+  }
+
+  var markers = {};
+  var bounds = L.latLngBounds([[STUDIO.lat, STUDIO.lng]]);
+
+  PLACES.forEach(function(p){
+    var icon = L.divIcon({
+      className: 'pin-wrap',
+      html: '<span class="pin" style="--c:' + COLORS[p.group] + '">' + p.num + '</span>',
+      iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -15]
+    });
+    var m = L.marker([p.lat, p.lng], {icon: icon, title: p.num + '. ' + p.name, riseOnHover: true})
+      .addTo(map)
+      .bindPopup(popupHtml(p), {maxWidth: 280, minWidth: 250, autoPanPadding: [26, 60]});
+    m.on('click', function(){ setActive(p.num, false); });
+    markers[p.num] = m;
+    bounds.extend([p.lat, p.lng]);
+  });
+
+  var current = 'all';
+  var activeNum = null;
+
+  function visible(p){ return current === 'all' || p.group === current; }
+
+  function applyFilter(){
+    var shown = 0;
+    PLACES.forEach(function(p){
+      var m = markers[p.num];
+      var el = m.getElement();
+      if (visible(p)) {
+        if (!map.hasLayer(m)) m.addTo(map);
+        if (el) el.classList.remove('is-dim');
+        shown++;
+      } else {
+        if (map.hasLayer(m)) map.removeLayer(m);
+      }
+    });
+    document.getElementById('map-count').textContent = shown + '곳 표시 중';
+    document.getElementById('list-count').textContent = shown + '곳';
+  }
+
+  function fitAll(){
+    map.fitBounds(bounds, {padding: [46, 46]});
+  }
+
+  /* ---------- list ---------- */
+  var listEl = document.getElementById('place-list');
+
+  PLACES.forEach(function(p){
+    var li = document.createElement('li');
+    li.className = 'card';
+    li.dataset.num = p.num;
+    li.dataset.group = p.group;
+    li.style.setProperty('--c', COLORS[p.group]);
+    var addrLine = p.road ? p.road + ' <span class="jibun">· 지번 ' + p.jibun + '</span>' : '지번 ' + p.jibun;
+    li.innerHTML =
+      '<button class="card-head" type="button" aria-expanded="false" aria-controls="detail-' + p.num + '">' +
+        '<span class="badge-num" aria-hidden="true">' + p.num + '</span>' +
+        '<span class="card-main">' +
+          '<span class="card-title"><strong>' + p.name + '</strong><span class="chip">' + p.groupLabel + '</span></span>' +
+          '<span class="card-sub">' + p.cat + ' · <b>' + p.dist + 'm</b> · ' + walkText(p.dist) + '</span>' +
+          '<span class="card-addr">' + addrLine + '</span>' +
+        '</span>' +
+        '<span class="card-chev" aria-hidden="true">+</span>' +
+      '</button>' +
+      '<div class="card-detail" id="detail-' + p.num + '" hidden>' +
+        '<dl>' +
+          '<dt>업종</dt><dd>' + p.cat + ' <span style="color:#8C8474">(' + p.groupLabel + ')</span></dd>' +
+          '<dt>거리</dt><dd>직선 ' + p.dist + 'm · ' + walkText(p.dist) + '</dd>' +
+          (p.road ? '<dt>도로명</dt><dd>' + p.road + '</dd>' : '') +
+          '<dt>지번</dt><dd>' + p.jibun + '</dd>' +
+        '</dl>' +
+        '<a class="btn btn-dark btn-sm naver-link" href="' + p.url + '" target="_blank" rel="noopener">네이버 지도에서 보기' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>' +
+        '</a>' +
+      '</div>';
+
+    var head = li.querySelector('.card-head');
+    var detail = li.querySelector('.card-detail');
+    head.addEventListener('click', function(){
+      var isOpen = !detail.hidden;
+      closeAllDetails();
+      if (!isOpen) {
+        detail.hidden = false;
+        head.setAttribute('aria-expanded', 'true');
+        li.classList.add('is-active');
+        focusOn(p, true);
+      } else {
+        li.classList.remove('is-active');
+        clearActiveMarker();
+      }
+    });
+    listEl.appendChild(li);
+  });
+
+  function closeAllDetails(){
+    listEl.querySelectorAll('.card').forEach(function(c){
+      c.classList.remove('is-active');
+      var d = c.querySelector('.card-detail');
+      var h = c.querySelector('.card-head');
+      d.hidden = true;
+      h.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function clearActiveMarker(){
+    if (activeNum !== null) {
+      var el = markers[activeNum] && markers[activeNum].getElement();
+      if (el) el.classList.remove('is-active');
+      activeNum = null;
+    }
+  }
+
+  function setActive(num, scroll){
+    clearActiveMarker();
+    activeNum = num;
+    var m = markers[num];
+    var el = m && m.getElement();
+    if (el) el.classList.add('is-active');
+    if (scroll) {
+      var card = listEl.querySelector('.card[data-num="' + num + '"]');
+      if (card) card.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
+  }
+
+  function focusOn(p, openPopup){
+    map.flyTo([p.lat, p.lng], Math.max(map.getZoom(), 17), {duration: 0.55});
+    if (openPopup) {
+      markers[p.num].openPopup();
+    }
+    setActive(p.num, false);
+  }
+
+  /* marker -> open matching card */
+  PLACES.forEach(function(p){
+    markers[p.num].on('popupopen', function(){
+      setActive(p.num, false);
+      var card = listEl.querySelector('.card[data-num="' + p.num + '"]');
+      if (card && card.querySelector('.card-detail').hidden) {
+        closeAllDetails();
+        card.querySelector('.card-detail').hidden = false;
+        card.querySelector('.card-head').setAttribute('aria-expanded', 'true');
+        card.classList.add('is-active');
+      }
+    });
+  });
+
+  /* ---------- filters ---------- */
+  var filtersEl = document.getElementById('filters');
+  filtersEl.addEventListener('click', function(e){
+    var btn = e.target.closest('.filter');
+    if (!btn) return;
+    current = btn.dataset.group;
+    filtersEl.querySelectorAll('.filter').forEach(function(b){
+      b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+    });
+    closeAllDetails();
+    clearActiveMarker();
+    map.closePopup();
+    applyFilter();
+
+    var shown = PLACES.filter(visible);
+    if (!shown.length) return;
+    var b = L.latLngBounds([[STUDIO.lat, STUDIO.lng]]);
+    shown.forEach(function(p){ b.extend([p.lat, p.lng]); });
+    map.fitBounds(b, {padding: [46, 46], maxZoom: 17});
+  });
+
+  /* list filtering */
+  var origApply = applyFilter;
+  applyFilter = function(){
+    origApply();
+    listEl.querySelectorAll('.card').forEach(function(card){
+      card.style.display = (current === 'all' || card.dataset.group === current) ? '' : 'none';
+    });
+    var any = Array.prototype.some.call(listEl.querySelectorAll('.card'), function(c){ return c.style.display !== 'none'; });
+    var empty = document.getElementById('empty-state');
+    if (!any && !empty) {
+      var div = document.createElement('li');
+      div.id = 'empty-state';
+      div.className = 'empty';
+      div.textContent = '이 업종에 저장된 곳이 없습니다.';
+      listEl.appendChild(div);
+    } else if (any && empty) {
+      empty.remove();
+    }
+  };
+
+  /* ---------- tools ---------- */
+  document.getElementById('fit-all').addEventListener('click', function(){
+    map.closePopup();
+    if (current === 'all') fitAll();
+    else {
+      var shown = PLACES.filter(visible);
+      var b = L.latLngBounds([[STUDIO.lat, STUDIO.lng]]);
+      shown.forEach(function(p){ b.extend([p.lat, p.lng]); });
+      map.fitBounds(b, {padding: [46, 46], maxZoom: 17});
+    }
+  });
+
+  document.getElementById('to-studio').addEventListener('click', function(){
+    map.flyTo([STUDIO.lat, STUDIO.lng], 17, {duration: 0.55});
+    setTimeout(function(){ studioMarker.openPopup(); }, 380);
+  });
+
+  map.on('click', function(){
+    closeAllDetails();
+    clearActiveMarker();
+  });
+
+  /* enable wheel zoom only while the pointer is over the map with ctrl/cmd, to keep page scroll */
+  var mapEl = document.getElementById('map');
+  mapEl.addEventListener('keydown', function(){ map.scrollWheelZoom.enable(); });
+  mapEl.addEventListener('mouseleave', function(){ map.scrollWheelZoom.disable(); });
+  mapEl.addEventListener('focus', function(){ map.scrollWheelZoom.enable(); });
+  mapEl.addEventListener('blur', function(){ map.scrollWheelZoom.disable(); });
+
+  applyFilter();
+  fitAll();
+  setTimeout(function(){ map.invalidateSize(); }, 300);
+
+  /* smooth in-page nav for mobile menu */
+  nav && nav.addEventListener('click', function(e){
+    if (e.target.closest('a')) {
+      nav.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+</script>
+</body>
+</html>
